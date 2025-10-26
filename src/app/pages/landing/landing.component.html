@@ -1,4 +1,18 @@
 <div class="landing-container">
+  <!-- Sticky Header -->
+  <header class="sticky-header">
+    <div class="header-content">
+      <div class="header-logo" (click)="goToHome()">
+        <i class="fa-solid fa-heartbeat"></i>
+        <span class="logo-text">SymptomSense</span>
+      </div>
+      <button class="header-cta" (click)="goToBeta()">
+        <span>Join Beta</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+  </header>
+
   <!-- Hero Section -->
   <section class="hero-section">
     <div class="hero-content">
@@ -11,21 +25,21 @@
       </p>
       <button class="cta-button primary" (click)="scrollToConsent()">
         Start Your Consultation
-        <span class="arrow">→</span>
+        <i class="fa-solid fa-arrow-right" style="margin-left:8px"></i>
       </button>
     </div>
     <div class="hero-visual">
       <div class="floating-card card-1">
-        <div class="card-icon">🩺</div>
-        <div class="card-text">24/7 Availability</div>
+        <div class="card-icon"><i class="fa-solid fa-chart-line" aria-hidden="true"></i></div>
+        <div class="card-text">Instant Analysis</div>
       </div>
       <div class="floating-card card-2">
-        <div class="card-icon">🤖</div>
-        <div class="card-text">AI-Powered</div>
+        <div class="card-icon"><i class="fa-solid fa-microchip" aria-hidden="true"></i></div>
+        <div class="card-text">Multi-Modal AI</div>
       </div>
       <div class="floating-card card-3">
-        <div class="card-icon">🔒</div>
-        <div class="card-text">Secure & Private</div>
+        <div class="card-icon"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></div>
+        <div class="card-text">HIPAA Compliant</div>
       </div>
     </div>
   </section>
@@ -35,45 +49,45 @@
     <h2 class="section-title">Why Choose SymptomSense?</h2>
     <div class="features-grid">
       <div class="feature-card">
-        <div class="feature-icon">⚡</div>
-        <h3 class="feature-title">Instant Responses</h3>
+        <div class="feature-icon"><i class="fa-solid fa-bolt"></i></div>
+        <h3 class="feature-title">Immediate Insights</h3>
         <p class="feature-description">
-          Get immediate answers to your health questions without waiting for appointments.
+          Receive instant, evidence-based health guidance without the wait. Available 24/7 whenever you need it.
         </p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🧠</div>
-        <h3 class="feature-title">Advanced AI</h3>
+        <div class="feature-icon"><i class="fa-solid fa-brain"></i></div>
+        <h3 class="feature-title">Clinical-Grade AI</h3>
         <p class="feature-description">
-          Powered by state-of-the-art AI models including Mistral and Gemini for accurate insights.
+          Powered by advanced language models trained on medical literature for reliable symptom analysis.
         </p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">💬</div>
+        <div class="feature-icon"><i class="fa-solid fa-comments"></i></div>
         <h3 class="feature-title">Natural Conversation</h3>
         <p class="feature-description">
-          Describe your symptoms in your own words - our AI understands natural language.
+          Describe symptoms in your own words. Our AI understands context and asks relevant follow-up questions.
         </p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">📸</div>
-        <h3 class="feature-title">Visual Analysis</h3>
+        <div class="feature-icon"><i class="fa-solid fa-image"></i></div>
+        <h3 class="feature-title">Image Recognition</h3>
         <p class="feature-description">
-          Upload images of symptoms for more comprehensive analysis and insights.
+          Upload photos of visible symptoms for enhanced analysis using computer vision technology.
         </p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🎤</div>
-        <h3 class="feature-title">Voice Input</h3>
+        <div class="feature-icon"><i class="fa-solid fa-microphone"></i></div>
+        <h3 class="feature-title">Voice-Enabled</h3>
         <p class="feature-description">
-          Use voice commands to describe your symptoms hands-free.
+          Describe symptoms hands-free with real-time voice recognition and text-to-speech responses.
         </p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🔐</div>
-        <h3 class="feature-title">Privacy First</h3>
+        <div class="feature-icon"><i class="fa-solid fa-user-shield"></i></div>
+        <h3 class="feature-title">HIPAA-Ready Security</h3>
         <p class="feature-description">
-          Your health information is private and secure - we never share your data.
+          Enterprise-grade encryption and privacy controls. Your health data remains confidential and secure.
         </p>
       </div>
     </div>
@@ -82,42 +96,20 @@
   <!-- Consent Section -->
   <section class="consent-section" id="consent">
     <div class="consent-container">
-      <h2 class="consent-title">Before You Begin</h2>
-      <p class="consent-intro">Please read and agree to the following important information:</p>
-      
-      <div class="disclaimer-cards">
-        <div class="disclaimer-card">
-          <div class="disclaimer-header">
-            <span class="disclaimer-icon">⚠️</span>
-            <h3>Medical Disclaimer</h3>
-          </div>
-          <div class="disclaimer-content">
-            <pre class="disclaimer-text">{{ medicalDisclaimer }}</pre>
-          </div>
-        </div>
-
-        <div class="disclaimer-card">
-          <div class="disclaimer-header">
-            <span class="disclaimer-icon">🔒</span>
-            <h3>Privacy Notice</h3>
-          </div>
-          <div class="disclaimer-content">
-            <pre class="disclaimer-text">{{ privacyNotice }}</pre>
-          </div>
-        </div>
+      <h2 class="section-title">Medical Disclaimer & Privacy Notice</h2>
+      <div class="disclaimer-content">
+        <p class="disclaimer-text">{{ medicalDisclaimer }}</p>
+        <p class="disclaimer-text">{{ privacyNotice }}</p>
       </div>
-
-      <button class="cta-button primary large" (click)="startConsultation()">
-        I Understand & Agree - Start Consultation
-        <span class="arrow">→</span>
+      <button class="cta-button primary" (click)="startConsultation()">
+        I Understand & Agree
+        <i class="fa-solid fa-check" style="margin-left:8px"></i>
       </button>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="landing-footer">
-    <p>&copy; 2025 SymptomSense. All rights reserved.</p>
-    <p class="footer-note">This is an AI-powered informational tool, not a substitute for professional medical advice.</p>
+  <footer class="footer">
+    <p>&copy; {{ currentYear }} SymptomSense. All rights reserved.</p>
   </footer>
 </div>
-

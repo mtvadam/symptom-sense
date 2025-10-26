@@ -1,4 +1,25 @@
 <div class="chat-container">
+  <!-- Sidebar Component -->
+  @if (showSidebar) {
+    <app-chat-sidebar
+      #sidebar
+      (conversationSelected)="onConversationSelected($event)"
+      (newConversation)="onNewConversation()"
+      (closeSidebar)="closeSidebar()"
+      (deleteConversation)="onDeleteConversation($event)"
+    ></app-chat-sidebar>
+  }
+
+  <!-- Delete Confirmation Modal -->
+  <app-confirm-modal
+    [show]="showDeleteModal"
+    message="Are you sure you want to delete this conversation? This action cannot be undone."
+    confirmText="Delete"
+    cancelText="Cancel"
+    (confirmed)="confirmDelete()"
+    (cancelled)="cancelDelete()"
+  ></app-confirm-modal>
+
   <app-error-message
     [message]="errorMessage"
     [show]="showError"
@@ -7,26 +28,51 @@
 
   <header class="chat-header">
     <div class="header-left">
-      <button class="back-button" (click)="goToLanding()" aria-label="Back to home">
-        ← Home
+      <button class="history-button" (click)="toggleSidebar()" aria-label="Chat history">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i>
       </button>
-      <h1 class="chat-title">SymptomSense</h1>
+      <button class="back-button" (click)="goToLanding()" aria-label="Back to home">
+        <i class="fa-solid fa-arrow-left" aria-hidden="true" style="margin-right:8px"></i>
+        Home
+      </button>
+      <div class="model-selector">
+        <label for="ai-model">AI Model:</label>
+        <select id="ai-model" [(ngModel)]="selectedModel" (change)="onModelChange()" class="model-dropdown">
+          <option value="MISTRAL">Mistral Vision</option>
+          <option value="GEMINI">ss-novavox-v1</option>
+          <option value="ASHISH">ss-lumalight-v1</option>
+        </select>
+      </div>
     </div>
-    <div class="model-selector">
-      <label for="ai-model">AI Model:</label>
-      <select id="ai-model" [(ngModel)]="selectedModel" (change)="onModelChange()" class="model-dropdown">
-        <option value="MISTRAL">Mistral Vision</option>
-        <option value="GEMINI">ss-novavox-v1</option>
-        <option value="ASHISH">ss-lumalight-v1</option>
-      </select>
-    </div>
+    <h1 class="chat-title">
+      <i class="fa-solid fa-heartbeat"></i>
+      <span>SymptomSense</span>
+    </h1>
   </header>
 
   <div class="messages-container" #messageContainer>
     @if (messages.length === 0) {
       <div class="empty-state">
-        <p>Welcome! How can I assist you today?</p>
-        <p class="empty-state-subtitle">Describe your symptoms and I'll help you understand them better.</p>
+        <div class="welcome-card">
+          <div class="welcome-icon">
+            <i class="fa-solid fa-heartbeat"></i>
+          </div>
+          <div class="welcome-message">{{ currentWelcomeMessage }}</div>
+          <div class="welcome-features">
+            <div class="feature-pill">
+              <i class="fa-solid fa-microphone"></i>
+              <span>Voice Input</span>
+            </div>
+            <div class="feature-pill">
+              <i class="fa-solid fa-image"></i>
+              <span>Image Upload</span>
+            </div>
+            <div class="feature-pill">
+              <i class="fa-solid fa-comments"></i>
+              <span>AI Powered</span>
+            </div>
+          </div>
+        </div>
       </div>
     }
     
@@ -41,8 +87,8 @@
     @if (imagePreviewUrl) {
       <div class="image-preview-container">
         <img [src]="imagePreviewUrl" alt="Preview" class="image-preview" />
-        <button class="remove-image-btn" (click)="removeImage()" aria-label="Remove image">
-          ✕
+        <button class="remove-image-btn icon-button" (click)="removeImage()" aria-label="Remove image" title="Remove image">
+          <i class="fa-solid fa-x" aria-hidden="true"></i>
         </button>
       </div>
     }
@@ -56,8 +102,15 @@
           aria-label="Upload image"
           title="Upload image"
         >
-          📷
+          <i class="fa-solid fa-image" aria-hidden="true"></i>
         </button>
+        <input
+          type="file"
+          #fileInput
+          style="display: none"
+          (change)="onImageSelected($event)"
+          accept="image/jpeg, image/png"
+        />
 
         @if (isVoiceSupported) {
           <button
@@ -68,37 +121,30 @@
             aria-label="Voice input"
             title="Voice input"
           >
-            🎤
+            <i class="fa-solid fa-microphone" aria-hidden="true"></i>
           </button>
         }
 
-        <input
-          type="text"
+        <textarea
           class="text-input"
           [(ngModel)]="inputMessage"
-          (keypress)="onKeyPress($event)"
+          (keydown)="onKeyPress($event)"
+          (input)="adjustTextareaHeight()"
           [disabled]="isLoading"
-          placeholder="Type your message..."
-        />
+          placeholder="Message SymptomSense..."
+          rows="1"
+        ></textarea>
 
         <button
           class="send-button"
           (click)="sendMessage()"
-          [disabled]="isLoading"
+          [disabled]="isLoading || (!inputMessage.trim() && !selectedImage)"
           aria-label="Send message"
+          title="Send message"
         >
-          Send
+          <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
         </button>
       </div>
     </div>
-
-    <input
-      #fileInput
-      type="file"
-      accept="image/jpeg,image/png"
-      (change)="onImageSelected($event)"
-      style="display: none"
-    />
   </footer>
 </div>
-

@@ -1,0 +1,64 @@
+<div class="sidebar-overlay" (click)="close()"></div>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <h2 class="sidebar-title">Chat History</h2>
+    <button class="close-button" (click)="close()" aria-label="Close sidebar">
+      <i class="fa-solid fa-times" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <button class="new-chat-button" (click)="onNewConversation()">
+    <i class="fa-solid fa-plus" aria-hidden="true"></i>
+    New Conversation
+  </button>
+
+  <div class="conversations-list">
+    @if (conversations.length === 0) {
+      <div class="empty-history">
+        <i class="fa-solid fa-comments" aria-hidden="true"></i>
+        <p>No conversations yet</p>
+        <p class="empty-subtitle">Start a new conversation to begin</p>
+      </div>
+    }
+
+    @for (conversation of conversations; track conversation.id) {
+      <div 
+        class="conversation-item"
+        [class.active]="isCurrentConversation(conversation.id)"
+        [class.editing]="editingConversationId === conversation.id"
+        (click)="selectConversation(conversation.id)"
+        (contextmenu)="onContextMenu($event, conversation)"
+      >
+        <div class="conversation-content">
+          @if (editingConversationId === conversation.id) {
+            <input
+              type="text"
+              class="rename-input"
+              [(ngModel)]="editingTitle"
+              (click)="$event.stopPropagation()"
+              (keydown)="onRenameKeydown($event, conversation.id)"
+              (blur)="saveRename(conversation.id)"
+              autofocus
+            />
+          } @else {
+            <div class="conversation-title">{{ conversation.title }}</div>
+          }
+          <div class="conversation-meta">
+            <span class="conversation-date">{{ formatDate(conversation.updatedAt) }}</span>
+            <span class="conversation-count">{{ conversation.messages.length }} messages</span>
+          </div>
+        </div>
+        <button 
+          class="delete-button" 
+          (click)="onDeleteConversation($event, conversation.id)"
+          aria-label="Delete conversation"
+          title="Delete conversation"
+        >
+          <i class="fa-solid fa-trash" aria-hidden="true"></i>
+        </button>
+      </div>
+    }
+  </div>
+</div>
+

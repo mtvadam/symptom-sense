@@ -26,5 +26,17 @@ export class LandingComponent {
       consentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
+
+  goToBeta(): void {
+    this.router.navigate(['/beta']);
+  }
+
+  goToHome(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  get currentYear(): number {
+    return new Date().getFullYear();
+  }
 }
 

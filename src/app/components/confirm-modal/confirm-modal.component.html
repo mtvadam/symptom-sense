@@ -1,0 +1,14 @@
+@if (show) {
+  <div class="modal-overlay" (click)="onCancel()">
+    <div class="modal-dialog" (click)="$event.stopPropagation()">
+      <div class="modal-content">
+        <p class="modal-message">{{ message }}</p>
+        <div class="modal-actions">
+          <button class="btn btn-cancel" (click)="onCancel()">{{ cancelText }}</button>
+          <button class="btn btn-confirm" (click)="onConfirm()">{{ confirmText }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+

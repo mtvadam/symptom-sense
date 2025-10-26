@@ -11,6 +11,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/chat/chat.component').then((m) => m.ChatComponent),
   },
   {
+    path: 'beta',
+    loadComponent: () => import('./pages/beta-signup/beta-signup.component').then((m) => m.BetaSignupComponent),
+  },
+  {
     path: '**',
     redirectTo: '',
   },
