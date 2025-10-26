@@ -33,9 +33,12 @@ export class VoiceService {
 
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       this.recognition = new SpeechRecognition();
-      this.recognition.continuous = false;
-      this.recognition.interimResults = false;
+      this.recognition.continuous = true; // Keep listening continuously
+      this.recognition.interimResults = true; // Get real-time interim results
       this.recognition.lang = 'en-US';
+      this.recognition.maxAlternatives = 1;
+
+      let finalTranscript = '';
 
       this.recognition.onstart = () => {
         console.log('Voice recognition started');
@@ -43,21 +46,45 @@ export class VoiceService {
       };
 
       this.recognition.onresult = (event: any) => {
-        const transcript = event.results[0][0].transcript;
-        console.log('Voice transcript captured:', transcript);
-        observer.next(transcript);
-        observer.complete();
+        let interimTranscript = '';
+
+        // Process all results
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const transcript = event.results[i][0].transcript;
+          
+          if (event.results[i].isFinal) {
+            // Final result - add to final transcript
+            finalTranscript += transcript + ' ';
+            console.log('Final transcript:', transcript);
+          } else {
+            // Interim result - add to interim transcript
+            interimTranscript += transcript;
+            console.log('Interim transcript:', transcript);
+          }
+        }
+
+        // Emit the combined transcript (final + interim)
+        const currentTranscript = (finalTranscript + interimTranscript).trim();
+        if (currentTranscript) {
+          observer.next(currentTranscript);
+        }
       };
 
       this.recognition.onerror = (event: any) => {
         console.error('Voice recognition error event:', event.error);
         this.isRecognitionActive = false;
-        observer.error(event.error || 'Voice recognition error');
+        // Ignore 'no-speech' and 'aborted' errors as they're normal when stopping
+        if (event.error !== 'no-speech' && event.error !== 'aborted') {
+          observer.error(event.error || 'Voice recognition error');
+        } else {
+          observer.complete();
+        }
       };
 
       this.recognition.onend = () => {
         console.log('Voice recognition ended');
         this.isRecognitionActive = false;
+        observer.complete();
       };
 
       try {
