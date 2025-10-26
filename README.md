@@ -27,6 +27,8 @@ A two-page Angular MVP application for AI medical diagnostic chat interactions. 
 - **RxJS** (Reactive programming)
 - **Web Speech API** (Voice input)
 - **HttpClient** (API communication)
+- **Docker** (Containerization for easy deployment)
+- **Nginx** (Production web server)
 
 ## Project Structure
 
@@ -59,18 +61,45 @@ src/
 
 ## Installation
 
-1. **Clone the repository**
+### Option 1: Docker (Recommended - No Local Dependencies Required)
+
+If you have Docker installed, you can run the application without installing Node.js or any dependencies:
+
+```bash
+# Production build
+docker-compose up -d
+
+# Development mode with hot-reload
+docker-compose -f docker-compose.dev.yml up
+```
+
+The application will be available at `http://localhost:4200`
+
+📖 **See [DOCKER_SETUP.md](DOCKER_SETUP.md) for detailed Docker instructions**
+
+### Option 2: Local Development
+
+1. **Prerequisites**
+   - Node.js 18+ and npm
+
+2. **Clone the repository**
    ```bash
    cd symptom-sense
    ```
 
-2. **Install dependencies**
+3. **Install dependencies**
    ```bash
    npm install
    ```
 
 ## Development
 
+### With Docker
+```bash
+docker-compose -f docker-compose.dev.yml up
+```
+
+### Without Docker
 Start the development server:
 
 ```bash
@@ -185,6 +214,20 @@ npm test
 
 ## Deployment
 
+### Docker Deployment (Recommended)
+
+```bash
+# Build and run production container
+docker-compose up -d --build
+
+# Deploy to container registry
+docker build -t symptom-sense .
+docker tag symptom-sense your-registry/symptom-sense:latest
+docker push your-registry/symptom-sense:latest
+```
+
+### Static Hosting
+
 The application can be deployed to any static hosting service:
 
 1. Build the production version: `npm run build`
@@ -196,6 +239,7 @@ Popular options:
 - Firebase Hosting
 - AWS S3 + CloudFront
 - Azure Static Web Apps
+- Docker containers (Kubernetes, AWS ECS, Azure Container Instances)
 
 ## Future Enhancements
 

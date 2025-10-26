@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  symptom-sense-dev:
+    image: node:20-alpine
+    container_name: symptom-sense-dev
+    working_dir: /app
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "4200:4200"
+    command: sh -c "npm install --legacy-peer-deps && npm start"
+    environment:
+      - NODE_ENV=development
+    stdin_open: true
+    tty: true
+    networks:
+      - symptom-sense-network
+
+networks:
+  symptom-sense-network:
+    driver: bridge
+
