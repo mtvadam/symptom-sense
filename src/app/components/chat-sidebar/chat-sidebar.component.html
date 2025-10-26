@@ -1,6 +1,6 @@
-<div class="sidebar-overlay" (click)="close()"></div>
+<div class="sidebar-overlay" [class.closing]="isClosing" (click)="close()"></div>
 
-<div class="sidebar">
+<div class="sidebar" [class.closing]="isClosing">
   <div class="sidebar-header">
     <h2 class="sidebar-title">Chat History</h2>
     <button class="close-button" (click)="close()" aria-label="Close sidebar">

@@ -155,19 +155,21 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
       .sendMessage(messageToSend, imageToSend, this.sessionId)
       .subscribe({
         next: (response) => {
+          this.isLoading = false;
+          
+          // Create AI message with empty content initially
           const aiMessage: Message = {
             id: this.generateId(),
             type: 'ai',
-            content: response.response,
+            content: '',
             image: null,
             timestamp: new Date(),
           };
           this.messages.push(aiMessage);
-          this.isLoading = false;
           this.shouldScrollToBottom = true;
           
-          // Save conversation after receiving AI response
-          this.saveCurrentConversation();
+          // Animate the response word by word
+          this.animateResponse(aiMessage, response.response);
         },
         error: (error) => {
           this.isLoading = false;
@@ -295,6 +297,30 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     } catch (error) {
       console.error('Error scrolling to bottom:', error);
     }
+  }
+
+  private animateResponse(message: Message, fullText: string): void {
+    const words = fullText.split(' ');
+    let currentIndex = 0;
+    
+    const animationInterval = setInterval(() => {
+      if (currentIndex < words.length) {
+        // Add the next word
+        message.content += (currentIndex > 0 ? ' ' : '') + words[currentIndex];
+        currentIndex++;
+        
+        // Trigger change detection and scroll
+        this.ngZone.run(() => {
+          this.cdr.detectChanges();
+          this.shouldScrollToBottom = true;
+        });
+      } else {
+        // Animation complete
+        clearInterval(animationInterval);
+        // Save conversation after animation completes
+        this.saveCurrentConversation();
+      }
+    }, 50); // 50ms delay between words (adjust for faster/slower)
   }
 
   private generateId(): string {

@@ -8,7 +8,6 @@
       </div>
       <button class="header-cta" (click)="goToBeta()">
         <span>Join Beta</span>
-        <i class="fa-solid fa-arrow-right"></i>
       </button>
     </div>
   </header>
@@ -23,9 +22,9 @@
         Get instant, intelligent health insights powered by advanced AI. 
         Understand your symptoms better and make informed decisions about your health.
       </p>
-      <button class="cta-button primary" (click)="scrollToConsent()">
-        Start Your Consultation
-        <i class="fa-solid fa-arrow-right" style="margin-left:8px"></i>
+      <button class="cta-button primary hero-cta" (click)="scrollToConsent()">
+        <span>Start Your Consultation</span>
+        <i class="fa-solid fa-arrow-right cta-arrow" aria-hidden="true"></i>
       </button>
     </div>
     <div class="hero-visual">
@@ -101,9 +100,9 @@
         <p class="disclaimer-text">{{ medicalDisclaimer }}</p>
         <p class="disclaimer-text">{{ privacyNotice }}</p>
       </div>
-      <button class="cta-button primary" (click)="startConsultation()">
-        I Understand & Agree
-        <i class="fa-solid fa-check" style="margin-left:8px"></i>
+      <button class="cta-button primary consent-cta" (click)="startConsultation()">
+        <span>I Understand & Agree</span>
+        <i class="fa-solid fa-check cta-check" aria-hidden="true"></i>
       </button>
     </div>
   </section>

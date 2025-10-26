@@ -39,6 +39,8 @@
   color: var(--color-text);
   margin-bottom: 24px;
   font-weight: 500;
+  white-space: pre-line;
+  line-height: 1.6;
 }
 
 .modal-actions {
@@ -68,13 +70,13 @@
 }
 
 .btn-confirm {
-  background: var(--color-primary);
+  background: #ef4444;
   color: white;
-  border: 1px solid var(--color-primary);
+  border: 1px solid #ef4444;
 }
 
 .btn-confirm:hover {
-  background: var(--color-primary-600);
-  border-color: var(--color-primary-600);
+  background: #dc2626;
+  border-color: #dc2626;
 }
 

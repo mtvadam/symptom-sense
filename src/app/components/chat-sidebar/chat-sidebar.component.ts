@@ -21,6 +21,7 @@ export class ChatSidebarComponent implements OnInit {
   currentConversationId: string | null = null;
   editingConversationId: string | null = null;
   editingTitle: string = '';
+  isClosing: boolean = false;
 
   constructor(private conversationService: ConversationService) {}
 
@@ -47,7 +48,11 @@ export class ChatSidebarComponent implements OnInit {
   }
 
   close(): void {
-    this.closeSidebar.emit();
+    this.isClosing = true;
+    setTimeout(() => {
+      this.closeSidebar.emit();
+      this.isClosing = false;
+    }, 300); // Match animation duration
   }
 
   isCurrentConversation(id: string): boolean {

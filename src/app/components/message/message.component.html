@@ -20,8 +20,8 @@
     <!-- Playback controls and timestamp for AI messages -->
     @if (message.type === 'ai') {
       <div class="playback-controls">
-        <button class="icon-button" (click)="togglePlay()" aria-label="Play or stop readout">
-          <i class="fa-solid" [class.fa-stop]="playing" [class.fa-play]="!playing" aria-hidden="true"></i>
+        <button class="icon-button" (click)="togglePlay()" [attr.aria-label]="playing && !paused ? 'Pause readout' : 'Play readout'">
+          <i class="fa-solid" [class.fa-pause]="playing && !paused" [class.fa-play]="!playing || paused" aria-hidden="true"></i>
         </button>
         <div class="message-timestamp">
           {{ message.timestamp | date: 'short' }}
