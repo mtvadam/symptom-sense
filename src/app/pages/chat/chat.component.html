@@ -6,7 +6,12 @@
   ></app-error-message>
 
   <header class="chat-header">
-    <h1 class="chat-title">SymptomSense</h1>
+    <div class="header-left">
+      <button class="back-button" (click)="goToLanding()" aria-label="Back to home">
+        ← Home
+      </button>
+      <h1 class="chat-title">SymptomSense</h1>
+    </div>
     <div class="model-selector">
       <label for="ai-model">AI Model:</label>
       <select id="ai-model" [(ngModel)]="selectedModel" (change)="onModelChange()" class="model-dropdown">

@@ -19,5 +19,12 @@ export class LandingComponent {
   startConsultation(): void {
     this.router.navigate(['/chat']);
   }
+
+  scrollToConsent(): void {
+    const consentSection = document.getElementById('consent');
+    if (consentSection) {
+      consentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 }
 

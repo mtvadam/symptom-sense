@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MessageComponent } from '../../components/message/message.component';
 import { LoadingComponent } from '../../components/loading/loading.component';
@@ -41,7 +42,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   constructor(
     private chatService: ChatService,
     private voiceService: VoiceService,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -246,6 +248,10 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   onModelChange(): void {
     this.chatService.setProvider(this.selectedModel);
     console.log('AI Model changed to:', this.selectedModel);
+  }
+
+  goToLanding(): void {
+    this.router.navigate(['/']);
   }
 }
 

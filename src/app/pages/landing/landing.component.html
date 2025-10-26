@@ -1,23 +1,123 @@
 <div class="landing-container">
-  <div class="landing-content">
-    <header class="landing-header">
-      <h1 class="app-title">{{ appName }}</h1>
-      <p class="app-tagline">{{ tagline }}</p>
-    </header>
-
-    <div class="disclaimer-section">
-      <div class="disclaimer-box">
-        <pre class="disclaimer-text">{{ medicalDisclaimer }}</pre>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <div class="hero-badge">AI-Powered Healthcare</div>
+      <h1 class="hero-title">{{ appName }}</h1>
+      <p class="hero-subtitle">{{ tagline }}</p>
+      <p class="hero-description">
+        Get instant, intelligent health insights powered by advanced AI. 
+        Understand your symptoms better and make informed decisions about your health.
+      </p>
+      <button class="cta-button primary" (click)="scrollToConsent()">
+        Start Your Consultation
+        <span class="arrow">→</span>
+      </button>
+    </div>
+    <div class="hero-visual">
+      <div class="floating-card card-1">
+        <div class="card-icon">🩺</div>
+        <div class="card-text">24/7 Availability</div>
       </div>
-
-      <div class="privacy-box">
-        <pre class="privacy-text">{{ privacyNotice }}</pre>
+      <div class="floating-card card-2">
+        <div class="card-icon">🤖</div>
+        <div class="card-text">AI-Powered</div>
+      </div>
+      <div class="floating-card card-3">
+        <div class="card-icon">🔒</div>
+        <div class="card-text">Secure & Private</div>
       </div>
     </div>
+  </section>
 
-    <button class="start-button" (click)="startConsultation()">
-      I Understand & Agree - Start Consultation
-    </button>
-  </div>
+  <!-- Features Section -->
+  <section class="features-section">
+    <h2 class="section-title">Why Choose SymptomSense?</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3 class="feature-title">Instant Responses</h3>
+        <p class="feature-description">
+          Get immediate answers to your health questions without waiting for appointments.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧠</div>
+        <h3 class="feature-title">Advanced AI</h3>
+        <p class="feature-description">
+          Powered by state-of-the-art AI models including Mistral and Gemini for accurate insights.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💬</div>
+        <h3 class="feature-title">Natural Conversation</h3>
+        <p class="feature-description">
+          Describe your symptoms in your own words - our AI understands natural language.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📸</div>
+        <h3 class="feature-title">Visual Analysis</h3>
+        <p class="feature-description">
+          Upload images of symptoms for more comprehensive analysis and insights.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎤</div>
+        <h3 class="feature-title">Voice Input</h3>
+        <p class="feature-description">
+          Use voice commands to describe your symptoms hands-free.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔐</div>
+        <h3 class="feature-title">Privacy First</h3>
+        <p class="feature-description">
+          Your health information is private and secure - we never share your data.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Consent Section -->
+  <section class="consent-section" id="consent">
+    <div class="consent-container">
+      <h2 class="consent-title">Before You Begin</h2>
+      <p class="consent-intro">Please read and agree to the following important information:</p>
+      
+      <div class="disclaimer-cards">
+        <div class="disclaimer-card">
+          <div class="disclaimer-header">
+            <span class="disclaimer-icon">⚠️</span>
+            <h3>Medical Disclaimer</h3>
+          </div>
+          <div class="disclaimer-content">
+            <pre class="disclaimer-text">{{ medicalDisclaimer }}</pre>
+          </div>
+        </div>
+
+        <div class="disclaimer-card">
+          <div class="disclaimer-header">
+            <span class="disclaimer-icon">🔒</span>
+            <h3>Privacy Notice</h3>
+          </div>
+          <div class="disclaimer-content">
+            <pre class="disclaimer-text">{{ privacyNotice }}</pre>
+          </div>
+        </div>
+      </div>
+
+      <button class="cta-button primary large" (click)="startConsultation()">
+        I Understand & Agree - Start Consultation
+        <span class="arrow">→</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="landing-footer">
+    <p>&copy; 2025 SymptomSense. All rights reserved.</p>
+    <p class="footer-note">This is an AI-powered informational tool, not a substitute for professional medical advice.</p>
+  </footer>
 </div>
 
