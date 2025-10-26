@@ -16,16 +16,16 @@ export const AI_MODELS = {
     model: 'pixtral-12b-2409', // Vision-capable model
   },
   GEMINI: {
-    name: 'Gemini 1.5 Pro',
+    name: 'ss-novavox-v1',
     apiKey: 'YOUR_GEMINI_API_KEY',
     apiUrl: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent',
-    model: 'gemini-1.5-pro',
+    model: 'ss-novavox-v1',
   },
   ASHISH: {
-    name: 'Ashish Pro',
+    name: 'ss-lumalight-v1',
     apiKey: 'YOUR_ASHISH_API_KEY',
     apiUrl: 'YOUR_ASHISH_API_URL',
-    model: 'ashish-pro',
+    model: 'ss-lumalight-v1',
   },
 };
 
