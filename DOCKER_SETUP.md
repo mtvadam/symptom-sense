@@ -7,7 +7,22 @@ This guide explains how to run SymptomSense using Docker, without needing to ins
 - [Docker](https://docs.docker.com/get-docker/) (version 20.10 or higher)
 - [Docker Compose](https://docs.docker.com/compose/install/) (version 2.0 or higher)
 
-## Quick Start
+## 🚀 Automatic Quick Start (Easiest)
+
+The project includes automatic startup scripts:
+
+```bash
+# This automatically handles Docker for you!
+npm start
+```
+
+The script will:
+- ✅ Detect your OS (Windows/Mac/Linux)
+- ✅ Check if Docker is running
+- ✅ Start containers automatically
+- ✅ Show helpful error messages if Docker isn't available
+
+## Manual Quick Start
 
 ### Production Build
 

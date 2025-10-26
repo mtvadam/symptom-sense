@@ -3,8 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "npm run start:docker",
+    "start:docker": "node check-platform.js docker",
+    "start:local": "node check-platform.js local",
+    "start:direct": "ng serve",
     "build": "ng build",
+    "build:docker": "docker-compose up -d --build",
+    "stop:docker": "docker-compose down",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

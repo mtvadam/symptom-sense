@@ -59,51 +59,70 @@ src/
 └── main.ts                    # Bootstrap file
 ```
 
-## Installation
+## Installation & Quick Start
 
-### Option 1: Docker (Recommended - No Local Dependencies Required)
+### 🚀 Automatic Setup (Recommended)
 
-If you have Docker installed, you can run the application without installing Node.js or any dependencies:
+The easiest way to run the project - just one command:
 
 ```bash
-# Production build
-docker-compose up -d
+# Clone the repository
+git clone https://github.com/mirzaa5/symptom-sense.git
+cd symptom-sense
 
-# Development mode with hot-reload
-docker-compose -f docker-compose.dev.yml up
+# Start the application (automatically uses Docker)
+npm start
 ```
 
-The application will be available at `http://localhost:4200`
+The application will:
+- ✅ Detect your operating system (Windows/Mac/Linux)
+- ✅ Check if Docker is available
+- ✅ Automatically start Docker containers if Docker is installed
+- ✅ Fall back to local Node.js if Docker is not available
+- ✅ Open at `http://localhost:4200`
+
+**That's it!** No manual configuration needed.
+
+### 📋 Available Commands
+
+```bash
+# Start with Docker (default)
+npm start
+
+# Start without Docker (uses local Node.js)
+npm run start:local
+
+# Direct Angular CLI (no scripts)
+npm run start:direct
+
+# Production Docker build
+npm run build:docker
+
+# Stop Docker containers
+npm run stop:docker
+
+# Traditional build
+npm run build
+```
+
+### Option 1: Docker (Recommended - No Local Node.js Required)
+
+**Prerequisites:** Docker Desktop
+
+The project automatically uses Docker when you run `npm start`. Docker containers will be created and started automatically.
 
 📖 **See [DOCKER_SETUP.md](DOCKER_SETUP.md) for detailed Docker instructions**
 
-### Option 2: Local Development
+### Option 2: Local Development (Without Docker)
 
-1. **Prerequisites**
-   - Node.js 18+ and npm
-
-2. **Clone the repository**
-   ```bash
-   cd symptom-sense
-   ```
-
-3. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-## Development
-
-### With Docker
-```bash
-docker-compose -f docker-compose.dev.yml up
-```
-
-### Without Docker
-Start the development server:
+**Prerequisites:** Node.js 18+ and npm
 
 ```bash
-npm start
+# Install dependencies (only needed once)
+npm install
+
+# Start without Docker
+npm run start:local
 ```
 
 Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
