@@ -26,26 +26,55 @@ export class ChatService {
   sendMessage(message: string, image: string | null, sessionId: string): Observable<ChatResponse> {
     switch (this.currentProvider) {
       case 'MISTRAL':
-        return this.sendToMistral(message);
+        return this.sendToMistral(message, image);
       case 'GEMINI':
         return this.sendToGemini(message);
       case 'ASHISH':
         return this.sendToAshish(message);
       default:
-        return this.sendToMistral(message);
+        return this.sendToMistral(message, image);
     }
   }
 
-  private sendToMistral(message: string): Observable<ChatResponse> {
+  private sendToMistral(message: string, image: string | null = null): Observable<ChatResponse> {
     const config = AI_MODELS.MISTRAL;
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${config.apiKey}`
     });
 
+    // System prompt for medical analysis
+    const systemMessage = {
+      role: 'system',
+      content: 'You are a medical diagnostic assistant. Analyze symptoms carefully and provide helpful, accurate information. When analyzing images, describe visible symptoms, potential conditions, and recommend appropriate medical consultation. Always remind users to seek professional medical advice for accurate diagnosis.'
+    };
+
+    // Build message content - if image exists, use multimodal format
+    let messageContent: any;
+    
+    if (image) {
+      // Multimodal format with text and image
+      messageContent = [
+        {
+          type: 'text',
+          text: message || 'Please analyze this image and describe what you see, focusing on any medical symptoms or concerns.'
+        },
+        {
+          type: 'image_url',
+          image_url: image // Base64 image string
+        }
+      ];
+    } else {
+      // Text-only format
+      messageContent = message;
+    }
+
     const body = {
       model: config.model,
-      messages: [{ role: 'user', content: message }]
+      messages: [
+        systemMessage,
+        { role: 'user', content: messageContent }
+      ]
     };
 
     return this.http.post<any>(config.apiUrl, body, { headers }).pipe(

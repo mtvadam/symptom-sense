@@ -10,10 +10,10 @@ export const APP_CONSTANTS = {
 
 export const AI_MODELS = {
   MISTRAL: {
-    name: 'Mistral',
+    name: 'Mistral Vision',
     apiKey: 'SFDoNcIdekOhrpWpaRTfbVjHnk4yKPYz',
     apiUrl: 'https://api.mistral.ai/v1/chat/completions',
-    model: 'mistral-tiny',
+    model: 'pixtral-12b-2409', // Vision-capable model
   },
   GEMINI: {
     name: 'Gemini 1.5 Pro',
