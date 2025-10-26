@@ -1,0 +1,23 @@
+<div class="landing-container">
+  <div class="landing-content">
+    <header class="landing-header">
+      <h1 class="app-title">{{ appName }}</h1>
+      <p class="app-tagline">{{ tagline }}</p>
+    </header>
+
+    <div class="disclaimer-section">
+      <div class="disclaimer-box">
+        <pre class="disclaimer-text">{{ medicalDisclaimer }}</pre>
+      </div>
+
+      <div class="privacy-box">
+        <pre class="privacy-text">{{ privacyNotice }}</pre>
+      </div>
+    </div>
+
+    <button class="start-button" (click)="startConsultation()">
+      I Understand & Agree - Start Consultation
+    </button>
+  </div>
+</div>
+

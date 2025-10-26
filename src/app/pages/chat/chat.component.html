@@ -1,0 +1,99 @@
+<div class="chat-container">
+  <app-error-message
+    [message]="errorMessage"
+    [show]="showError"
+    (dismiss)="dismissError()"
+  ></app-error-message>
+
+  <header class="chat-header">
+    <h1 class="chat-title">SymptomSense</h1>
+    <div class="model-selector">
+      <label for="ai-model">AI Model:</label>
+      <select id="ai-model" [(ngModel)]="selectedModel" (change)="onModelChange()" class="model-dropdown">
+        <option value="MISTRAL">Mistral</option>
+        <option value="GEMINI">Gemini 1.5 Pro</option>
+        <option value="ASHISH">Ashish Pro</option>
+      </select>
+    </div>
+  </header>
+
+  <div class="messages-container" #messageContainer>
+    @if (messages.length === 0) {
+      <div class="empty-state">
+        <p>Welcome! How can I assist you today?</p>
+        <p class="empty-state-subtitle">Describe your symptoms and I'll help you understand them better.</p>
+      </div>
+    }
+    
+    @for (message of messages; track message.id) {
+      <app-message [message]="message"></app-message>
+    }
+    
+    <app-loading [show]="isLoading"></app-loading>
+  </div>
+
+  <footer class="chat-footer">
+    @if (imagePreviewUrl) {
+      <div class="image-preview-container">
+        <img [src]="imagePreviewUrl" alt="Preview" class="image-preview" />
+        <button class="remove-image-btn" (click)="removeImage()" aria-label="Remove image">
+          ✕
+        </button>
+      </div>
+    }
+
+    <div class="input-container">
+      <div class="input-controls">
+        <button
+          class="icon-button"
+          (click)="triggerFileInput()"
+          [disabled]="isLoading"
+          aria-label="Upload image"
+          title="Upload image"
+        >
+          📷
+        </button>
+
+        @if (isVoiceSupported) {
+          <button
+            class="icon-button"
+            [class.recording]="isRecording"
+            (click)="toggleRecording()"
+            [disabled]="isLoading"
+            aria-label="Voice input"
+            title="Voice input"
+          >
+            🎤
+          </button>
+        }
+
+        <input
+          type="text"
+          class="text-input"
+          [(ngModel)]="inputMessage"
+          (keypress)="onKeyPress($event)"
+          [disabled]="isLoading"
+          placeholder="Type your message..."
+        />
+
+        <button
+          class="send-button"
+          (click)="sendMessage()"
+          [disabled]="isLoading"
+          aria-label="Send message"
+        >
+          Send
+        </button>
+      </div>
+    </div>
+
+    <input
+      #fileInput
+      type="file"
+      accept="image/jpeg,image/png"
+      (change)="onImageSelected($event)"
+      style="display: none"
+    />
+  </footer>
+</div>
+

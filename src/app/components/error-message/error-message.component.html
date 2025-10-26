@@ -1,0 +1,11 @@
+@if (show) {
+  <div class="error-container">
+    <div class="error-content">
+      <span class="error-text">{{ message }}</span>
+      <button class="error-close" (click)="onDismiss()" aria-label="Close error">
+        ✕
+      </button>
+    </div>
+  </div>
+}
+
