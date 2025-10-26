@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewChecked, ChangeDetectorRef, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -82,7 +82,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     private sessionService: SessionService,
     private conversationService: ConversationService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private ngZone: NgZone
   ) {}
 
   ngOnInit(): void {
@@ -120,6 +121,11 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (!trimmedMessage && !this.selectedImage) {
       this.showErrorMessage(ERROR_MESSAGES.EMPTY_MESSAGE);
       return;
+    }
+
+    // Stop recording if still active
+    if (this.isRecording) {
+      this.stopRecording();
     }
 
     // Create user message
@@ -244,21 +250,26 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     const subscription = this.voiceService.startRecording().subscribe({
       next: (transcript) => {
         console.log('Transcript received in component:', transcript);
-        // Update in real-time
-        this.inputMessage = transcript;
-        // Manually trigger change detection
-        this.cdr.detectChanges();
-        setTimeout(() => this.adjustTextareaHeight(), 0);
+        // Run inside Angular zone to ensure change detection
+        this.ngZone.run(() => {
+          this.inputMessage = transcript;
+          this.cdr.detectChanges();
+          setTimeout(() => this.adjustTextareaHeight(), 0);
+        });
       },
       error: (error) => {
         console.error('Voice recognition error:', error);
-        this.isRecording = false;
-        const errorMsg = typeof error === 'string' ? error : 'Voice recognition error. Please try again.';
-        this.showErrorMessage(errorMsg);
+        this.ngZone.run(() => {
+          this.isRecording = false;
+          const errorMsg = typeof error === 'string' ? error : 'Voice recognition error. Please try again.';
+          this.showErrorMessage(errorMsg);
+        });
       },
       complete: () => {
         console.log('Voice recognition completed');
-        this.isRecording = false;
+        this.ngZone.run(() => {
+          this.isRecording = false;
+        });
       }
     });
     this.subscriptions.push(subscription);
