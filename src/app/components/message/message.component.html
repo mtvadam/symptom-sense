@@ -2,13 +2,18 @@
   <div class="message-bubble">
     <div class="message-content">
       @if (message.type === 'ai') {
-        <span #messageText class="word-container">
+        <span class="word-container">
           @for (word of words; track $index) {
-            <span 
-              class="word" 
-              [class.highlighted]="isWordHighlighted($index)"
-              (click)="onWordClick($index)"
-            >{{ word }}</span>{{ ' ' }}
+            @if (word === '\n') {
+              <br>
+            } @else {
+              <span 
+                class="word" 
+                [class.highlighted]="isWordHighlighted($index) && playing"
+                [class.paused]="isWordHighlighted($index) && paused"
+                (click)="onWordClick($index)"
+              >{{ word }}</span>{{ ' ' }}
+            }
           }
         </span>
       } @else {

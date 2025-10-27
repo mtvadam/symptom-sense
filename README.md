@@ -13,11 +13,14 @@ A two-page Angular MVP application for AI medical diagnostic chat interactions. 
 ### Chat Interface
 - **Text Messaging**: Type and send messages to the AI assistant
 - **Voice Input**: Speech-to-text using Web Speech API
+- **Voice Output**: Realistic AI voice using ElevenLabs TTS (with word-by-word highlighting)
 - **Image Upload**: Upload medical images (JPG/PNG, max 10MB)
 - **Real-time Chat**: Bidirectional communication with AI
 - **Loading States**: Visual feedback during API calls
 - **Error Handling**: User-friendly error messages with auto-dismiss
 - **Session Management**: 30-minute timeout with automatic session ID generation
+- **Conversation History**: Save, load, and manage multiple chat sessions
+- **Audio Playback**: Pause/resume, click-to-play from any word
 - **Responsive Design**: Works on mobile, tablet, and desktop
 
 ## Technology Stack
@@ -26,6 +29,7 @@ A two-page Angular MVP application for AI medical diagnostic chat interactions. 
 - **TypeScript** (Strict mode)
 - **RxJS** (Reactive programming)
 - **Web Speech API** (Voice input)
+- **ElevenLabs API** (Realistic AI voice output)
 - **HttpClient** (API communication)
 - **Docker** (Containerization for easy deployment)
 - **Nginx** (Production web server)
@@ -112,6 +116,19 @@ npm run build
 The project automatically uses Docker when you run `npm start`. Docker containers will be created and started automatically.
 
 📖 **See [DOCKER_SETUP.md](DOCKER_SETUP.md) for detailed Docker instructions**
+
+### 🎤 ElevenLabs Voice Setup (Optional)
+
+For realistic AI voice output, configure ElevenLabs:
+
+```bash
+# In browser console (F12):
+localStorage.setItem('elevenlabs_api_key', 'YOUR_API_KEY');
+```
+
+📖 **See [ELEVENLABS_SETUP.md](ELEVENLABS_SETUP.md) for complete voice configuration guide**
+
+**Free Tier:** 10,000 characters/month - Sign up at [elevenlabs.io](https://elevenlabs.io/)
 
 ### Option 2: Local Development (Without Docker)
 

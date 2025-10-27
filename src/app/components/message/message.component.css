@@ -64,6 +64,7 @@
 /* Word highlighting for AI messages */
 .word-container {
   display: inline;
+  white-space: normal; /* Allow line breaks to work properly */
 }
 
 .word {
@@ -84,6 +85,15 @@
   border-radius: 3px;
   padding: 2px 4px;
   animation: highlightPulse 0.3s ease;
+}
+
+.word.paused {
+  background: #fbbf24;
+  color: #78350f;
+  font-weight: 600;
+  border-radius: 3px;
+  padding: 2px 4px;
+  /* No animation for paused state - static highlight */
 }
 
 @keyframes highlightPulse {
@@ -174,6 +184,12 @@
 
 .icon-button:active {
   transform: translateY(0);
+}
+
+.icon-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 .icon-button i {
